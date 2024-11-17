@@ -1,6 +1,6 @@
 import { db } from "@/app/_lib/prisma";
 import { TransactionType } from "@prisma/client";
-import { TransactionsPercentages } from "./types";
+import { TotalExpensePerCategory, TransactionsPercentages } from "./types";
 
 export const getDashboard = async (month: string) => {
   const where = {
@@ -77,11 +77,31 @@ export const getDashboard = async (month: string) => {
     ),
   };
 
+  const totalExpensePerCategory: TotalExpensePerCategory[] = (
+    await db.transaction.groupBy({
+      by: ["category"],
+      where: {
+        ...where,
+        type: "EXPENSE",
+      },
+      _sum: {
+        amount: true,
+      },
+    })
+  ).map((category) => ({
+    category: category.category,
+    totalAmount: Number(category._sum.amount),
+    percentageOfTotal: Math.round(
+      (Number(category._sum.amount) / expensesTotal) * 100,
+    ),
+  }));
+
   return {
     balance,
     depositsTotal,
     investmentsTotal,
     expensesTotal,
     typesPercentages,
+    totalExpensePerCategory,
   };
 };
