@@ -26,6 +26,12 @@ export const TRANSACTION_CATEGORY_LABELS = {
   UTILITY: "Utilidades",
 };
 
+export const TRANSACTION_TYPE_LABELS = {
+  DEPOSIT: "Depósito",
+  EXPENSE: "Despesa",
+  INVESTMENT: "Investimento",
+};
+
 export const TRANSACTION_PAYMENT_METHOD_LABELS = {
   BANK_TRANSFER: "Transferência bancária",
   BANK_SLIP: "Boleto bancário",
