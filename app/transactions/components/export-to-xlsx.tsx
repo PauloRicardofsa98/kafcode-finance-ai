@@ -65,7 +65,7 @@ const ExportToXlsx = ({ transactions }: ExportToXlsxProps) => {
       onClick={exportToExcel}
       disabled={loading}
     >
-      Exportar Excel
+      <span className="hidden lg:flex">Exportar Excel</span>
       {!loading ? <FolderUp /> : <Loader2Icon className="animate-spin" />}
     </Button>
   );

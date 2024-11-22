@@ -7,7 +7,6 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { canUserAddTransaction } from "../_data/can-user-add-transaction";
 import ExportToXlsx from "./components/export-to-xlsx";
-import { ScrollArea } from "../_components/ui/scroll-area";
 const TransactionsPage = async () => {
   const { userId } = await auth();
   if (!userId) {
@@ -18,6 +17,9 @@ const TransactionsPage = async () => {
     where: {
       userId,
     },
+    orderBy: {
+      date: "desc",
+    },
   });
 
   const userCanAddTransaction = await canUserAddTransaction();
@@ -25,10 +27,10 @@ const TransactionsPage = async () => {
   return (
     <>
       <NavBar />
-      <div className="flex flex-col space-y-1 overflow-hidden px-6 py-2">
+      <div className="flex flex-col space-y-1 px-6 py-2 lg:overflow-hidden">
         <div className="flex w-full items-center justify-between">
-          <h1 className="text-2xl font-bold">Transações</h1>
-          <div className="space-x-1">
+          <h1 className="text-xl font-bold lg:text-2xl">Transações</h1>
+          <div className="flex space-x-1">
             <ExportToXlsx
               transactions={JSON.parse(JSON.stringify(transactions))}
             />
@@ -38,12 +40,10 @@ const TransactionsPage = async () => {
           </div>
         </div>
 
-        <ScrollArea>
-          <DataTable
-            columns={transactionColumns}
-            data={JSON.parse(JSON.stringify(transactions))}
-          />
-        </ScrollArea>
+        <DataTable
+          columns={transactionColumns}
+          data={JSON.parse(JSON.stringify(transactions))}
+        />
       </div>
     </>
   );

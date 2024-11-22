@@ -39,9 +39,9 @@ export default async function Home({ searchParams: { month } }: HomeProps) {
   return (
     <>
       <NavBar />
-      <div className="flex flex-col space-y-6 overflow-hidden p-6">
-        <div className="flex justify-between">
-          <h1 className="text-2xl font-bold">Dashboard</h1>
+      <div className="flex flex-col space-y-4 p-6 lg:overflow-hidden">
+        <div className="flex items-center justify-between">
+          <h1 className="text-xl font-bold lg:text-2xl">Dashboard</h1>
           <div className="flex items-center gap-3">
             <AiReport
               month={month}
@@ -52,14 +52,14 @@ export default async function Home({ searchParams: { month } }: HomeProps) {
             <TimeSelect />
           </div>
         </div>
-        <div className="grid grid-cols-[2fr,1fr] gap-6 overflow-hidden">
-          <div className="flex flex-col gap-6 overflow-hidden">
+        <div className="grid gap-4 lg:grid-cols-[2fr,1fr] lg:overflow-hidden">
+          <div className="flex flex-col gap-4 lg:overflow-hidden">
             <SummaryCards
               {...dashboard}
               userCanAddTransaction={userCanAddTransaction}
             />
 
-            <div className="grid grid-cols-3 grid-rows-1 gap-6">
+            <div className="grid w-full gap-6 lg:grid-cols-3">
               <TransactionsPieChart {...dashboard} />
               <ExpensePerCategory
                 expensesPerCategory={dashboard.totalExpensePerCategory}
