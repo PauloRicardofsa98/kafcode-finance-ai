@@ -1,12 +1,15 @@
 "use client";
 
-import { UserButton } from "@clerk/nextjs";
+import { UserButton, useUser } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import ValePresent from "./vale-present";
 
 const NavBar = () => {
   const pathname = usePathname();
+  const { user } = useUser();
+  const hasPremiumPlan = user?.publicMetadata.subscriptionPlan === "premium";
 
   return (
     <nav className="flex flex-col items-center justify-between border-b border-solid px-2 py-2 lg:flex-row lg:px-8 lg:py-4">
@@ -52,6 +55,8 @@ const NavBar = () => {
             Assinatura
           </Link>
         </div>
+        {!hasPremiumPlan && <ValePresent />}
+
         <UserButton showName />
       </div>
     </nav>
